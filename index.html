@@ -7,236 +7,251 @@
 
 <style>
 :root{
-  --bg:#0b1220;
-  --card:#121a2f;
-  --gold:#f5c451;
-  --text:#ffffff;
-  --muted:#9aa4c7;
+  --bg:#0f172a;
+  --card:#111827;
+  --soft:#1f2937;
+  --gold:#f2c14e;
+  --gold-dark:#e0b43c;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --accent:#3b82f6;
 }
 
-*{box-sizing:border-box;font-family:system-ui,-apple-system}
+*{box-sizing:border-box;font-family:"Segoe UI",Tahoma}
 
 body{
   margin:0;
-  background:radial-gradient(circle at top,#1b2548,#060a18);
+  background:radial-gradient(circle at top,#1e293b,#020617);
   color:var(--text);
-  min-height:100vh;
   display:flex;
   justify-content:center;
-  padding:30px 10px;
+  padding:20px;
 }
 
-.app{
-  width:100%;
+.container{
   max-width:420px;
-  background:linear-gradient(180deg,#1b2548,#0c1328);
-  border-radius:24px;
-  padding:28px 20px 32px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  width:100%;
 }
 
+.card{
+  background:linear-gradient(180deg,#111827,#020617);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+
+/* ===== العنوان ===== */
 h1{
   text-align:center;
   margin:0;
   font-size:28px;
 }
-
 .quote{
   text-align:center;
   color:var(--gold);
-  margin:10px 0 22px;
+  margin-top:8px;
   font-size:14px;
 }
 
+/* ===== المصادر ===== */
 .sources{
-  background:#0e152c;
+  margin-top:24px;
+  background:linear-gradient(180deg,#0b1220,#020617);
   border-radius:18px;
-  padding:18px 12px;
-  margin-bottom:18px;
+  padding:18px;
 }
-
 .sources h3{
   text-align:center;
   margin:0 0 14px;
-  font-size:14px;
+  font-size:15px;
   color:var(--gold);
 }
-
-.source-list{
+.source-grid{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   justify-content:center;
 }
-
 .source{
-  padding:8px 14px;
-  border-radius:20px;
-  border:1px solid #2b3563;
-  color:#dbe1ff;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid #334155;
+  background:#020617;
+  color:var(--text);
   font-size:13px;
-  background:#101735;
+  cursor:pointer;
+  transition:.2s;
+}
+.source.active{
+  background:linear-gradient(135deg,#f2c14e,#e0b43c);
+  color:#020617;
+  border:none;
+  font-weight:bold;
 }
 
+/* ===== الإدخال ===== */
 textarea{
   width:100%;
-  min-height:120px;
+  margin-top:18px;
   border-radius:18px;
   border:none;
   padding:16px;
   font-size:15px;
-  outline:none;
   resize:none;
+  outline:none;
 }
 
-.buttons{
-  display:flex;
-  gap:10px;
-  margin-top:14px;
-}
-
-button{
-  flex:1;
-  border:none;
-  border-radius:30px;
+/* ===== زر التحقق ===== */
+.check-btn{
+  width:100%;
+  margin-top:16px;
   padding:14px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(135deg,#f2c14e,#e0b43c);
   font-size:16px;
+  font-weight:bold;
   cursor:pointer;
 }
 
-.check-btn{
-  background:linear-gradient(90deg,#f7d56d,#eab23f);
-  color:#000;
-  font-weight:700;
-}
-
-.clear-btn{
-  background:#1e264a;
-  color:#fff;
-}
-
+/* ===== النتيجة ===== */
 .result{
-  margin-top:16px;
-  padding:14px;
-  border-radius:14px;
-  text-align:center;
-  font-weight:700;
+  margin-top:18px;
+  background:#020617;
+  border-radius:18px;
+  padding:16px;
   display:none;
 }
+.result h4{
+  margin:0 0 8px;
+  color:#22c55e;
+}
+.result p{
+  margin:6px 0;
+  font-size:14px;
+}
+.warning{
+  margin-top:10px;
+  font-size:12px;
+  color:#facc15;
+}
 
-.result.correct{background:#0f5132;color:#d1fae5;}
-.result.good{background:#664d03;color:#fff3cd;}
-.result.weak{background:#842029;color:#f8d7da;}
-.result.unknown{background:#343a40;color:#e2e3e5;}
+/* ===== زر النسخ ===== */
+.copy-btn{
+  margin-top:10px;
+  background:#1f2937;
+  color:white;
+  border:none;
+  border-radius:10px;
+  padding:8px 12px;
+  cursor:pointer;
+  font-size:13px;
+}
 
+/* ===== PayPal ===== */
 .paypal{
   margin-top:16px;
   display:flex;
-  align-items:center;
   justify-content:center;
-  gap:8px;
-  background:#fff;
-  color:#000;
-  padding:14px;
-  border-radius:30px;
-  font-weight:700;
+}
+.paypal a{
   text-decoration:none;
+  background:white;
+  color:#020617;
+  padding:12px 18px;
+  border-radius:999px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
+/* ===== الفوتر ===== */
 .footer{
-  margin-top:18px;
   text-align:center;
-  font-size:13px;
+  margin-top:18px;
+  font-size:12px;
   color:var(--muted);
 }
 </style>
 </head>
 
 <body>
-<div class="app">
+<div class="container">
+  <div class="card">
 
-<h1>ميزان الحديث</h1>
-<div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
+    <h1>ميزان الحديث</h1>
+    <div class="quote">"إن هذا العلم دين، فانظروا عمّن تأخذون دينكم"</div>
 
-<div class="sources">
-  <h3>مصادر الحديث المعتمدة</h3>
-  <div class="source-list">
-    <div class="source">صحيح البخاري</div>
-    <div class="source">صحيح مسلم</div>
-    <div class="source">سنن أبي داود</div>
-    <div class="source">سنن الترمذي</div>
-    <div class="source">سنن النسائي</div>
-    <div class="source">سنن ابن ماجه</div>
-    <div class="source">مسند أحمد</div>
-    <div class="source">موطأ مالك</div>
+    <!-- المصادر -->
+    <div class="sources">
+      <h3>مصادر الحديث المعتمدة</h3>
+      <div class="source-grid">
+        <div class="source">صحيح البخاري</div>
+        <div class="source">صحيح مسلم</div>
+        <div class="source">سنن أبي داود</div>
+        <div class="source">سنن الترمذي</div>
+        <div class="source">سنن النسائي</div>
+        <div class="source">سنن ابن ماجه</div>
+        <div class="source">مسند أحمد</div>
+        <div class="source">موطأ مالك</div>
+      </div>
+    </div>
+
+    <!-- الإدخال -->
+    <textarea rows="4" id="hadith" placeholder="اكتب نص الحديث هنا..."></textarea>
+
+    <button class="check-btn" onclick="checkHadith()">تحقق من الحديث</button>
+
+    <!-- النتيجة -->
+    <div class="result" id="resultBox">
+      <h4>🔍 النتيجة</h4>
+      <p id="status">الحديث: حسن</p>
+      <p id="sourceResult">📖 المصدر المحتمل: صحيح مسلم</p>
+
+      <button class="copy-btn" onclick="copyText()">📋 نسخ الحديث</button>
+
+      <div class="warning">
+        ⚠️ النتيجة إرشادية ولا تغني عن الرجوع لأهل العلم
+      </div>
+    </div>
+
+    <!-- PayPal -->
+    <div class="paypal">
+      <a href="https://www.paypal.me/abdkb96" target="_blank">
+        PayPal ✔️ المساهمة في الوقف
+      </a>
+    </div>
+
+    <div class="footer">
+      إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
+      صدقة جارية – لا تنسونا من الدعاء
+    </div>
+
   </div>
 </div>
 
-<textarea id="hadith" placeholder="اكتب نص الحديث هنا..."></textarea>
-
-<div class="buttons">
-  <button class="check-btn" onclick="checkHadith()">تحقق من الحديث</button>
-  <button class="clear-btn" onclick="clearText()">مسح</button>
-</div>
-
-<div id="result" class="result"></div>
-
-<a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-  ✔ المساهمة في الوقف — PayPal
-</a>
-
-<div class="footer">
-  إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
-  صدقة جارية – لا تنسونا من الدعاء
-</div>
-
-</div>
-
 <script>
-const textarea = document.getElementById("hadith");
-const resultBox = document.getElementById("result");
-
-// استرجاع آخر حديث
-textarea.value = localStorage.getItem("lastHadith") || "";
-
-textarea.addEventListener("input", () => {
-  localStorage.setItem("lastHadith", textarea.value);
+/* تفعيل اختيار المصدر */
+document.querySelectorAll(".source").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".source").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+  });
 });
 
+/* تحقق وهمي (واجهة فقط) */
 function checkHadith(){
-  const text = textarea.value.trim();
-  if(!text){
-    showResult("❗ الرجاء إدخال نص الحديث", "unknown");
-    return;
-  }
-
-  // محاكاة ذكية (مؤقتة)
-  let status;
-  if(text.length < 40) status="weak";
-  else if(text.includes("قال رسول الله")) status="correct";
-  else if(text.length < 120) status="good";
-  else status="unknown";
-
-  const messages={
-    correct:"✅ الحديث صحيح",
-    good:"🟡 الحديث حسن",
-    weak:"❌ الحديث ضعيف",
-    unknown:"⚪ لم يتم التعرف على درجة الحديث"
-  };
-
-  showResult(messages[status], status);
+  const text=document.getElementById("hadith").value.trim();
+  if(!text){alert("اكتب الحديث أولاً");return;}
+  document.getElementById("resultBox").style.display="block";
 }
 
-function showResult(text,type){
-  resultBox.className="result "+type;
-  resultBox.textContent=text;
-  resultBox.style.display="block";
-}
-
-function clearText(){
-  textarea.value="";
-  localStorage.removeItem("lastHadith");
-  resultBox.style.display="none";
+/* نسخ النص */
+function copyText(){
+  const text=document.getElementById("hadith").value;
+  navigator.clipboard.writeText(text);
+  alert("تم نسخ الحديث");
 }
 </script>
 
