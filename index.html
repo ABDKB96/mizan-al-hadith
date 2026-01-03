@@ -3,148 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ميزان الحديث</title>
 
 <style>
-:root{
-  --bg:#0b1020;
-  --card:#141a33;
-  --gold:#f2c15c;
-  --gold-soft:#e6b34a;
-  --text:#ffffff;
-  --muted:#b9c0d9;
+:root {
+  --bg-dark: #0b1220;
+  --card-dark: #141c2f;
+  --gold: #f5c15b;
+  --gold-soft: #f7d37e;
+  --text-light: #ffffff;
+  --text-muted: #b6c0d1;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  min-height:100vh;
-  background:radial-gradient(circle at top,#18204a 0%,#0b1020 60%);
-  font-family:"Segoe UI",Tahoma,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:40px 12px;
-  color:var(--text);
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
-.card{
-  width:100%;
-  max-width:460px;
-  background:linear-gradient(180deg,#1a2144,#0f1533);
-  border-radius:26px;
-  padding:28px 22px 26px;
-  box-shadow:0 40px 120px rgba(0,0,0,.6);
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1c2745 0%, #0b1220 60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-light);
 }
 
-h1{
-  margin:0;
-  text-align:center;
-  font-size:30px;
-  letter-spacing:.5px;
+.app {
+  width: 100%;
+  max-width: 430px;
+  background: linear-gradient(180deg, #1a2340, #0f172a);
+  border-radius: 28px;
+  padding: 28px 22px 30px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
 }
 
-.quote{
-  text-align:center;
-  color:var(--gold);
-  margin-top:10px;
-  font-size:15px;
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 30px;
 }
 
-/* ===== IMAGE ===== */
-.hero{
-  margin:22px 0 20px;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:inset 0 0 40px rgba(0,0,0,.5),
-             0 20px 60px rgba(0,0,0,.6);
+.quote {
+  text-align: center;
+  margin-top: 10px;
+  color: var(--gold);
+  font-size: 15px;
 }
 
-.hero img{
-  width:100%;
-  display:block;
+.hero {
+  margin: 22px 0 18px;
+  background: #0d1428;
+  border-radius: 22px;
+  padding: 18px;
 }
 
-/* ===== INPUT ===== */
-textarea{
-  width:100%;
-  border:none;
-  border-radius:20px;
-  padding:18px 16px;
-  font-size:16px;
-  resize:none;
-  outline:none;
-  min-height:110px;
+.hero img {
+  width: 100%;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 20px 50px rgba(0,0,0,.7);
 }
 
-/* ===== BUTTON ===== */
-.main-btn{
-  margin-top:16px;
-  width:100%;
-  border:none;
-  border-radius:999px;
-  padding:15px;
-  font-size:18px;
-  font-weight:bold;
-  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
-  cursor:pointer;
-  box-shadow:0 10px 30px rgba(242,193,92,.4);
+textarea {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 16px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  background: #fff;
+  color: #000;
+  margin-top: 14px;
+  min-height: 110px;
 }
 
-/* ===== PAYPAL ===== */
-.paypal{
-  margin-top:14px;
-  background:#fff;
-  color:#111;
-  border-radius:999px;
-  padding:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  font-weight:600;
+.btn-main {
+  margin-top: 18px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #f4c25a, #f7d37e);
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(245,193,91,.45);
 }
 
-.paypal img{
-  height:18px;
+.btn-paypal {
+  margin-top: 16px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-/* ===== FOOTER ===== */
-.footer{
-  margin-top:18px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
+.btn-paypal img {
+  height: 18px;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.footer strong {
+  color: #fff;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="app">
 
-<h1>ميزان الحديث</h1>
-<div class="quote">"إن هذا العلم دين، فانظروا عمّن تأخذون دينكم"</div>
+  <h1>ميزان الحديث</h1>
+  <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-<div class="hero">
-<img src="data:image/jpeg;base64,5uSBUa4POc0NBcmR2z83A9etSbuRk9+KgzjOfzpScUh2L6lSOTg0xWbnP4VXDEjr...BQI/9k=" alt="كتب الحديث">
-</div>
+  <!-- الصورة -->
+  <div class="hero">
+    <img src="./books.jpg" alt="كتب الحديث">
+  </div>
 
-<textarea placeholder="اكتب نص الحديث هنا..."></textarea>
+  <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
 
-<button class="main-btn">تحقق من الحديث</button>
+  <button class="btn-main">تحقق من الحديث</button>
 
-<a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-  <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png">
-  المساهمة في الوقف ✓
-</a>
+  <a class="btn-paypal" href="https://www.paypal.me/abdkb96" target="_blank">
+    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal">
+    المساهمة في الوقف ✓
+  </a>
 
-<div class="footer">
-إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
-صدقة جارية – لا تنسونا من الدعاء
-</div>
+  <div class="footer">
+    إعداد <strong>عبدالفتاح الشوابكة</strong> (@abdkb96)<br>
+    صدقة جارية – لا تنسونا من الدعاء
+  </div>
 
 </div>
 
