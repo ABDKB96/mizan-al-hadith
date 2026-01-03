@@ -6,187 +6,239 @@
 <title>ميزان الحديث</title>
 
 <style>
-:root {
-  --bg-dark: #0b1220;
-  --card-dark: #141c2f;
-  --gold: #f5c15b;
-  --gold-soft: #f7d37e;
-  --text-light: #ffffff;
-  --text-muted: #b6c0d1;
+:root{
+  --bg:#0b1220;
+  --card:#121a2f;
+  --gold:#f5c451;
+  --text:#ffffff;
+  --muted:#9aa4c7;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+*{box-sizing:border-box;font-family:system-ui,-apple-system}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at top,#1b2548,#060a18);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:30px 10px;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #1c2745 0%, #0b1220 60%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  color: var(--text-light);
+.app{
+  width:100%;
+  max-width:420px;
+  background:linear-gradient(180deg,#1b2548,#0c1328);
+  border-radius:24px;
+  padding:28px 20px 32px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
 
-.app {
-  width: 100%;
-  max-width: 430px;
-  background: linear-gradient(180deg, #1a2340, #0f172a);
-  border-radius: 28px;
-  padding: 28px 22px 30px;
-  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+h1{
+  text-align:center;
+  margin:0;
+  font-size:28px;
 }
 
-h1 {
-  margin: 0;
-  text-align: center;
-  font-size: 30px;
+.quote{
+  text-align:center;
+  color:var(--gold);
+  margin:10px 0 22px;
+  font-size:14px;
 }
 
-.quote {
-  text-align: center;
-  margin-top: 10px;
-  color: var(--gold);
-  font-size: 15px;
+.sources{
+  background:#0e152c;
+  border-radius:18px;
+  padding:18px 12px;
+  margin-bottom:18px;
 }
 
-/* مصادر الحديث */
-.sources {
-  margin: 22px 0;
-  background: #0d1428;
-  border-radius: 22px;
-  padding: 18px;
+.sources h3{
+  text-align:center;
+  margin:0 0 14px;
+  font-size:14px;
+  color:var(--gold);
 }
 
-.sources-title {
-  text-align: center;
-  color: var(--gold-soft);
-  font-size: 14px;
-  margin-bottom: 14px;
+.source-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
 }
 
-.source-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+.source{
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #2b3563;
+  color:#dbe1ff;
+  font-size:13px;
+  background:#101735;
 }
 
-.source {
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #1e2a4d, #111a33);
-  color: #fff;
-  font-size: 13px;
-  border: 1px solid rgba(245,193,91,.25);
-  transition: all .25s ease;
+textarea{
+  width:100%;
+  min-height:120px;
+  border-radius:18px;
+  border:none;
+  padding:16px;
+  font-size:15px;
+  outline:none;
+  resize:none;
 }
 
-.source:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(245,193,91,.35);
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
 }
 
-/* الإدخال */
-textarea {
-  width: 100%;
-  border: none;
-  border-radius: 18px;
-  padding: 16px;
-  font-size: 16px;
-  resize: none;
-  outline: none;
-  background: #fff;
-  color: #000;
-  margin-top: 14px;
-  min-height: 110px;
+button{
+  flex:1;
+  border:none;
+  border-radius:30px;
+  padding:14px;
+  font-size:16px;
+  cursor:pointer;
 }
 
-.btn-main {
-  margin-top: 18px;
-  width: 100%;
-  padding: 16px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #f4c25a, #f7d37e);
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 12px 30px rgba(245,193,91,.45);
+.check-btn{
+  background:linear-gradient(90deg,#f7d56d,#eab23f);
+  color:#000;
+  font-weight:700;
 }
 
-.btn-paypal {
-  margin-top: 16px;
-  width: 100%;
-  padding: 14px;
-  border-radius: 999px;
-  background: #fff;
-  color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  font-weight: 600;
+.clear-btn{
+  background:#1e264a;
+  color:#fff;
 }
 
-.btn-paypal img {
-  height: 18px;
+.result{
+  margin-top:16px;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:700;
+  display:none;
 }
 
-.footer {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-muted);
+.result.correct{background:#0f5132;color:#d1fae5;}
+.result.good{background:#664d03;color:#fff3cd;}
+.result.weak{background:#842029;color:#f8d7da;}
+.result.unknown{background:#343a40;color:#e2e3e5;}
+
+.paypal{
+  margin-top:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:#fff;
+  color:#000;
+  padding:14px;
+  border-radius:30px;
+  font-weight:700;
+  text-decoration:none;
 }
 
-.footer strong {
-  color: #fff;
+.footer{
+  margin-top:18px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
-  <h1>ميزان الحديث</h1>
-  <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
+<h1>ميزان الحديث</h1>
+<div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-  <!-- مصادر الحديث -->
-  <div class="sources">
-    <div class="sources-title">مصادر الحديث المعتمدة</div>
-    <div class="source-list">
-      <div class="source">صحيح البخاري</div>
-      <div class="source">صحيح مسلم</div>
-      <div class="source">سنن أبي داود</div>
-      <div class="source">سنن الترمذي</div>
-      <div class="source">سنن النسائي</div>
-      <div class="source">سنن ابن ماجه</div>
-      <div class="source">موطأ مالك</div>
-      <div class="source">مسند أحمد</div>
-    </div>
+<div class="sources">
+  <h3>مصادر الحديث المعتمدة</h3>
+  <div class="source-list">
+    <div class="source">صحيح البخاري</div>
+    <div class="source">صحيح مسلم</div>
+    <div class="source">سنن أبي داود</div>
+    <div class="source">سنن الترمذي</div>
+    <div class="source">سنن النسائي</div>
+    <div class="source">سنن ابن ماجه</div>
+    <div class="source">مسند أحمد</div>
+    <div class="source">موطأ مالك</div>
   </div>
+</div>
 
-  <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
+<textarea id="hadith" placeholder="اكتب نص الحديث هنا..."></textarea>
 
-  <button class="btn-main">تحقق من الحديث</button>
+<div class="buttons">
+  <button class="check-btn" onclick="checkHadith()">تحقق من الحديث</button>
+  <button class="clear-btn" onclick="clearText()">مسح</button>
+</div>
 
-  <a class="btn-paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png">
-    المساهمة في الوقف ✓
-  </a>
+<div id="result" class="result"></div>
 
-  <div class="footer">
-    إعداد <strong>عبدالفتاح الشوابكة</strong> (@abdkb96)<br>
-    صدقة جارية – لا تنسونا من الدعاء
-  </div>
+<a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
+  ✔ المساهمة في الوقف — PayPal
+</a>
+
+<div class="footer">
+  إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
+  صدقة جارية – لا تنسونا من الدعاء
+</div>
 
 </div>
+
+<script>
+const textarea = document.getElementById("hadith");
+const resultBox = document.getElementById("result");
+
+// استرجاع آخر حديث
+textarea.value = localStorage.getItem("lastHadith") || "";
+
+textarea.addEventListener("input", () => {
+  localStorage.setItem("lastHadith", textarea.value);
+});
+
+function checkHadith(){
+  const text = textarea.value.trim();
+  if(!text){
+    showResult("❗ الرجاء إدخال نص الحديث", "unknown");
+    return;
+  }
+
+  // محاكاة ذكية (مؤقتة)
+  let status;
+  if(text.length < 40) status="weak";
+  else if(text.includes("قال رسول الله")) status="correct";
+  else if(text.length < 120) status="good";
+  else status="unknown";
+
+  const messages={
+    correct:"✅ الحديث صحيح",
+    good:"🟡 الحديث حسن",
+    weak:"❌ الحديث ضعيف",
+    unknown:"⚪ لم يتم التعرف على درجة الحديث"
+  };
+
+  showResult(messages[status], status);
+}
+
+function showResult(text,type){
+  resultBox.className="result "+type;
+  resultBox.textContent=text;
+  resultBox.style.display="block";
+}
+
+function clearText(){
+  textarea.value="";
+  localStorage.removeItem("lastHadith");
+  resultBox.style.display="none";
+}
+</script>
 
 </body>
 </html>
