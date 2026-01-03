@@ -33,7 +33,10 @@ body{
   box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
-h1{text-align:center;margin:0;}
+h1{
+  text-align:center;
+  margin:0;
+}
 
 .quote{
   text-align:center;
@@ -55,25 +58,18 @@ h1{text-align:center;margin:0;}
   justify-content:center;
 }
 
-/* زر المصدر */
 .chip{
   padding:10px 14px;
   border-radius:999px;
   background:#020617;
   border:1px solid #1f2937;
   font-size:13px;
-  cursor:pointer;
-  transition:all .25s ease;
 }
 
-/* الزر النشط + إضاءة خافتة */
-.chip.active{
+.active{
   background:var(--gold);
   color:#000;
   font-weight:bold;
-  box-shadow:
-    0 0 8px rgba(244,193,93,.6),
-    0 0 20px rgba(244,193,93,.3);
 }
 
 textarea{
@@ -169,7 +165,7 @@ textarea{
 <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
 <div class="section-title">مصادر الحديث</div>
-<div class="sources" id="sources">
+<div class="sources">
   <div class="chip active">صحيح البخاري</div>
   <div class="chip">صحيح مسلم</div>
   <div class="chip">سنن الترمذي</div>
@@ -233,17 +229,5 @@ textarea{
 
 </div>
 </div>
-
-<script>
-/* تفعيل أزرار مصادر الحديث */
-document.querySelectorAll("#sources .chip").forEach(chip=>{
-  chip.addEventListener("click",()=>{
-    document.querySelectorAll("#sources .chip")
-      .forEach(c=>c.classList.remove("active"));
-    chip.classList.add("active");
-  });
-});
-</script>
-
 </body>
 </html>
