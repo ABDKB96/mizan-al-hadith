@@ -3,69 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ميزان الحديث</title>
 
 <style>
 :root{
   --bg1:#0b1020;
-  --bg2:#111827;
-  --gold:#f5c04e;
-  --gold-dark:#e0a92f;
-  --card:rgba(255,255,255,0.06);
-  --white:#ffffff;
-  --muted:#cbd5e1;
+  --bg2:#101933;
+  --gold:#f5c451;
+  --gold-dark:#d4a93a;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-  background:
-    radial-gradient(circle at top, #1e293b 0%, var(--bg1) 60%, #020617 100%);
-  color:var(--white);
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: radial-gradient(circle at top, #1a2450 0%, var(--bg1) 60%);
+  color:#fff;
   min-height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
-  padding:20px;
+  align-items:flex-start;
 }
 
 .app{
   width:100%;
-  max-width:420px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  max-width:430px;
+  margin:30px 12px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.2));
   border-radius:28px;
-  padding:26px 22px 30px;
+  padding:28px 22px 30px;
   box-shadow:0 30px 80px rgba(0,0,0,.55);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
 }
 
+/* ===== العنوان ===== */
 h1{
-  margin:0;
   text-align:center;
-  font-size:32px;
-  letter-spacing:.5px;
+  margin:0;
+  font-size:30px;
+  letter-spacing:1px;
 }
 
 .quote{
-  margin:12px 0 22px;
   text-align:center;
   color:var(--gold);
+  margin:12px 0 22px;
   font-size:15px;
 }
 
-/* ===== صورة الكتب ===== */
-.hero{
+/* ===== صورة الكتب (مرسومة CSS) ===== */
+.books{
+  position:relative;
+  margin:10px auto 26px;
   width:100%;
+  max-width:330px;
+  height:210px;
   border-radius:22px;
-  margin:18px 0 22px;
-  box-shadow:0 20px 50px rgba(0,0,0,.55);
-  display:block;
+  background:radial-gradient(circle at center, #1b2555, #0c1226);
+  box-shadow: inset 0 0 60px rgba(0,0,0,.6);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:24px;
 }
 
-/* ===== مربع الإدخال ===== */
+.book{
+  position:absolute;
+  height:44px;
+  border-radius:10px;
+  box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+
+.book::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  width:18px;
+  height:4px;
+  background:rgba(255,255,255,.35);
+  border-radius:4px;
+}
+
+/* كتاب سفلي */
+.book.b1{
+  width:85%;
+  bottom:0;
+  background:linear-gradient(90deg,#7b4f23,#c08a3a);
+}
+
+/* كتاب وسط */
+.book.b2{
+  width:78%;
+  bottom:38px;
+  background:linear-gradient(90deg,#1f4f78,#4d88b5);
+}
+
+/* كتاب علوي */
+.book.b3{
+  width:70%;
+  bottom:76px;
+  background:linear-gradient(90deg,#2f6b3f,#6fb38b);
+}
+
+/* هلال زخرفي */
+.moon{
+  position:absolute;
+  top:34px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--gold), var(--gold-dark));
+  box-shadow:0 0 30px rgba(245,196,81,.5);
+}
+.moon::after{
+  content:"";
+  position:absolute;
+  right:14px;
+  top:10px;
+  width:52px;
+  height:52px;
+  background:#1b2555;
+  border-radius:50%;
+}
+
+/* ===== الإدخال ===== */
 textarea{
   width:100%;
   height:120px;
@@ -81,76 +144,77 @@ textarea{
 .check-btn{
   margin-top:18px;
   width:100%;
+  height:54px;
   border:none;
-  border-radius:28px;
-  padding:16px;
+  border-radius:30px;
   font-size:18px;
   font-weight:bold;
-  background:linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color:#111;
-  cursor:pointer;
-  box-shadow:0 12px 30px rgba(245,192,78,.45);
+  color:#2c1a00;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  box-shadow:0 12px 30px rgba(245,196,81,.45);
 }
 
 /* ===== زر PayPal ===== */
 .paypal{
-  margin-top:18px;
-  width:100%;
-  text-decoration:none;
-  background:#fff;
-  color:#0f172a;
-  border-radius:28px;
-  padding:14px 16px;
+  margin-top:16px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  font-weight:600;
+  height:52px;
+  background:#fff;
+  color:#000;
+  border-radius:28px;
+  font-weight:bold;
+  text-decoration:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
 }
-
-.paypal img{
-  height:22px;
+.paypal span{
+  color:#0070ba;
+  font-weight:900;
 }
 
 /* ===== التوقيع ===== */
 .footer{
-  margin-top:22px;
+  margin-top:18px;
   text-align:center;
-  color:var(--muted);
   font-size:14px;
-  line-height:1.7;
+  color:#cbd5ff;
+}
+.footer small{
+  display:block;
+  margin-top:6px;
+  opacity:.85;
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
   <h1>ميزان الحديث</h1>
+  <div class="quote">"إن هذا العلم دين، فانظروا عمّن تأخذون دينكم"</div>
 
-  <div class="quote">
-    "إن هذا العلم دين، فانظروا عمّن تأخذون دينكم"
+  <div class="books">
+    <div class="moon"></div>
+    <div class="book b1"></div>
+    <div class="book b2"></div>
+    <div class="book b3"></div>
   </div>
-
-  <!-- صورة الكتب (اللي عجبتك) -->
-  <img src="books.png" alt="كتب الحديث" class="hero">
 
   <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
 
   <button class="check-btn">تحقق من الحديث</button>
 
   <a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-    <span>المساهمة في الوقف</span>
-    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal">
+    ✔ المساهمة في الوقف <span>PayPal</span>
   </a>
 
   <div class="footer">
-    إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
-    صدقة جارية – لا تنسونا من الدعاء
+    إعداد عبدالفتاح الشوابكة (@abdkb96)
+    <small>صدقة جارية – لا تنسونا من الدعاء</small>
   </div>
 
 </div>
-
 </body>
 </html>
