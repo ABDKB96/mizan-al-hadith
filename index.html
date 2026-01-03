@@ -7,9 +7,12 @@
 
 <style>
 :root{
-  --bg:#070b18;
-  --card:#0d1730;
-  --gold:#f5c24c;
+  --bg:#0b1020;
+  --card:#141a33;
+  --gold:#f2c15c;
+  --gold-soft:#e6b34a;
+  --text:#ffffff;
+  --muted:#b9c0d9;
 }
 
 *{box-sizing:border-box}
@@ -17,122 +20,133 @@
 body{
   margin:0;
   min-height:100vh;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-  background:
-    radial-gradient(circle at top, #1a2a52 0%, #070b18 60%);
+  background:radial-gradient(circle at top,#18204a 0%,#0b1020 60%);
+  font-family:"Segoe UI",Tahoma,sans-serif;
   display:flex;
-  align-items:center;
   justify-content:center;
-  color:#fff;
+  align-items:flex-start;
+  padding:40px 12px;
+  color:var(--text);
 }
 
-.app{
+.card{
   width:100%;
-  max-width:420px;
-  padding:28px 20px 30px;
-  background:rgba(15,25,55,.55);
-  backdrop-filter: blur(18px);
-  border-radius:28px;
-  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  max-width:460px;
+  background:linear-gradient(180deg,#1a2144,#0f1533);
+  border-radius:26px;
+  padding:28px 22px 26px;
+  box-shadow:0 40px 120px rgba(0,0,0,.6);
 }
 
 h1{
   margin:0;
-  font-size:34px;
   text-align:center;
+  font-size:30px;
+  letter-spacing:.5px;
 }
 
 .quote{
-  margin-top:8px;
   text-align:center;
   color:var(--gold);
+  margin-top:10px;
   font-size:15px;
 }
 
+/* ===== IMAGE ===== */
 .hero{
-  margin:22px 0 26px;
-  height:220px;
+  margin:22px 0 20px;
   border-radius:22px;
-  background:
-    radial-gradient(circle at center,
-      rgba(245,194,76,.15),
-      rgba(0,0,0,.65)),
-    url("https://images.unsplash.com/photo-1581091870627-3c5f75c97d46?auto=format&fit=crop&w=900&q=80");
-  background-size:cover;
-  background-position:center;
-  box-shadow: inset 0 0 60px rgba(0,0,0,.6);
+  overflow:hidden;
+  box-shadow:inset 0 0 40px rgba(0,0,0,.5),
+             0 20px 60px rgba(0,0,0,.6);
 }
 
+.hero img{
+  width:100%;
+  display:block;
+}
+
+/* ===== INPUT ===== */
 textarea{
   width:100%;
-  min-height:120px;
   border:none;
-  border-radius:18px;
-  padding:16px;
-  font-size:15px;
+  border-radius:20px;
+  padding:18px 16px;
+  font-size:16px;
+  resize:none;
   outline:none;
+  min-height:110px;
 }
 
-button.main{
+/* ===== BUTTON ===== */
+.main-btn{
+  margin-top:16px;
   width:100%;
-  margin-top:14px;
-  padding:16px;
-  font-size:18px;
   border:none;
   border-radius:999px;
-  background:linear-gradient(135deg,#f7d36b,#eeb93a);
-  color:#000;
+  padding:15px;
+  font-size:18px;
   font-weight:bold;
-  box-shadow:0 10px 30px rgba(245,194,76,.45);
+  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(242,193,92,.4);
 }
 
-a.paypal{
+/* ===== PAYPAL ===== */
+.paypal{
+  margin-top:14px;
+  background:#fff;
+  color:#111;
+  border-radius:999px;
+  padding:14px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
-  margin-top:14px;
-  padding:14px;
-  background:#fff;
-  color:#000;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:bold;
+  gap:8px;
+  font-weight:600;
 }
 
-a.paypal img{
-  height:22px;
+.paypal img{
+  height:18px;
 }
 
+/* ===== FOOTER ===== */
 .footer{
   margin-top:18px;
   text-align:center;
+  color:var(--muted);
   font-size:13px;
-  color:#cfd6ff;
+  line-height:1.6;
 }
 </style>
 </head>
 
 <body>
-  <div class="app">
-    <h1>ميزان الحديث</h1>
-    <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-    <div class="hero"></div>
+<div class="card">
 
-    <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
+<h1>ميزان الحديث</h1>
+<div class="quote">"إن هذا العلم دين، فانظروا عمّن تأخذون دينكم"</div>
 
-    <button class="main">تحقق من الحديث</button>
+<div class="hero">
+<img src="data:image/jpeg;base64,5uSBUa4POc0NBcmR2z83A9etSbuRk9+KgzjOfzpScUh2L6lSOTg0xWbnP4VXDEjr...BQI/9k=" alt="كتب الحديث">
+</div>
 
-    <a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-      <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png">
-      المساهمة في الوقف ✓
-    </a>
+<textarea placeholder="اكتب نص الحديث هنا..."></textarea>
 
-    <div class="footer">
-      إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
-      صدقة جارية – لا تنسونا من الدعاء
-    </div>
-  </div>
+<button class="main-btn">تحقق من الحديث</button>
+
+<a class="paypal" href="https://www.paypal.me/abdkb96" target="_blank">
+  <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png">
+  المساهمة في الوقف ✓
+</a>
+
+<div class="footer">
+إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
+صدقة جارية – لا تنسونا من الدعاء
+</div>
+
+</div>
+
 </body>
 </html>
