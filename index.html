@@ -33,10 +33,7 @@ body{
   box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
-h1{
-  text-align:center;
-  margin:0;
-}
+h1{text-align:center;margin:0;}
 
 .quote{
   text-align:center;
@@ -64,12 +61,15 @@ h1{
   background:#020617;
   border:1px solid #1f2937;
   font-size:13px;
+  cursor:pointer;
 }
 
-.active{
+.chip.active{
   background:var(--gold);
   color:#000;
   font-weight:bold;
+  box-shadow:0 0 8px rgba(244,193,93,.6),
+             0 0 20px rgba(244,193,93,.3);
 }
 
 textarea{
@@ -90,6 +90,7 @@ textarea{
   background:var(--gold);
   font-size:18px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .result{
@@ -97,6 +98,7 @@ textarea{
   background:#020617;
   border-radius:18px;
   padding:16px;
+  display:none;
 }
 
 .badge{
@@ -108,7 +110,6 @@ textarea{
 }
 
 .good{background:#22c55e;color:#000;}
-.ok{background:#facc15;color:#000;}
 .bad{background:#ef4444;color:#fff;}
 
 .box{
@@ -165,54 +166,36 @@ textarea{
 <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
 <div class="section-title">مصادر الحديث</div>
-<div class="sources">
-  <div class="chip active">صحيح البخاري</div>
-  <div class="chip">صحيح مسلم</div>
-  <div class="chip">سنن الترمذي</div>
-  <div class="chip">سنن النسائي</div>
-  <div class="chip">سنن أبي داود</div>
-  <div class="chip">سنن ابن ماجه</div>
-  <div class="chip">مسند أحمد</div>
-  <div class="chip">موطأ مالك</div>
+<div class="sources" id="sources">
+  <div class="chip active" data-book="bukhari">صحيح البخاري</div>
+  <div class="chip" data-book="muslim">صحيح مسلم</div>
+  <div class="chip" data-book="tirmidzi">سنن الترمذي</div>
+  <div class="chip" data-book="nasai">سنن النسائي</div>
+  <div class="chip" data-book="abu-dawud">سنن أبي داود</div>
+  <div class="chip" data-book="ibnu-majah">سنن ابن ماجه</div>
 </div>
 
-<textarea rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
+<textarea id="query" rows="4" placeholder="اكتب جزءًا من نص الحديث أو رقم الحديث..."></textarea>
 
-<div class="suggestions" style="margin-top:12px">
-  <div class="chip">إنما الأعمال بالنيات</div>
-  <div class="chip">الدين النصيحة</div>
-  <div class="chip">لا ضرر ولا ضرار</div>
-</div>
+<button class="check-btn" onclick="searchHadith()">تحقق من الحديث</button>
 
-<button class="check-btn">تحقق من الحديث</button>
-
-<div class="result">
+<div class="result" id="result">
   <h3>🔎 النتيجة</h3>
-  <div class="badge good">الحديث: صحيح</div>
-  <p>📚 المصدر المحتمل: صحيح البخاري</p>
+
+  <div class="badge good">حديث موجود</div>
 
   <div class="box">
-    <strong>🔍 أسباب الحكم:</strong>
-    <ul>
-      <li>اتصال السند</li>
-      <li>جميع الرواة ثقات</li>
-      <li>الحديث مروي في الصحيح</li>
-    </ul>
+    <strong>📜 نص الحديث:</strong>
+    <p id="hadithText"></p>
   </div>
 
   <div class="box">
-    <strong>👨‍🏫 أقوال أهل العلم:</strong>
-    <ul>
-      <li>قال الإمام البخاري: حديث صحيح</li>
-      <li>قال الإمام النووي: متفق على صحته</li>
-      <li>صححه ابن حجر العسقلاني</li>
-    </ul>
+    <strong>📚 التخريج:</strong>
+    <p id="takhrij"></p>
   </div>
-
-  <button class="copy-btn">📋 نسخ الحديث</button>
 
   <div class="warning">
-    ⚠️ النتيجة إرشادية ولا تُغني عن الرجوع لأهل العلم
+    ⚠️ النتيجة إرشادية وتعتمد على المصدر فقط
   </div>
 </div>
 
@@ -229,5 +212,62 @@ textarea{
 
 </div>
 </div>
+
+<script>
+let currentBook="bukhari";
+
+/* تفعيل أزرار المصادر */
+document.querySelectorAll("#sources .chip").forEach(chip=>{
+  chip.addEventListener("click",()=>{
+    document.querySelectorAll("#sources .chip")
+      .forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    currentBook=chip.dataset.book;
+  });
+});
+
+async function searchHadith(){
+  const q=document.getElementById("query").value.trim();
+  if(!q){ alert("اكتب نص الحديث أو رقمه"); return; }
+
+  const result=document.getElementById("result");
+  const text=document.getElementById("hadithText");
+  const takhrij=document.getElementById("takhrij");
+
+  result.style.display="block";
+  text.textContent="جاري البحث...";
+  takhrij.textContent="";
+
+  try{
+    const isNumber=/^\d+$/.test(q);
+    const range=isNumber ? `${q}-${q}` : "1-300";
+
+    const res=await fetch(
+      `https://api.hadith.gading.dev/books/${currentBook}?range=${range}`
+    );
+    const data=await res.json();
+
+    let hadith=null;
+
+    if(isNumber){
+      hadith=data.data.hadiths[0];
+    }else{
+      hadith=data.data.hadiths.find(h=>h.arab.includes(q));
+    }
+
+    if(!hadith){
+      text.textContent="لم يتم العثور على الحديث في هذا المصدر.";
+      return;
+    }
+
+    text.textContent=hadith.arab;
+    takhrij.textContent=`${currentBook} – حديث رقم ${hadith.number}`;
+
+  }catch(e){
+    text.textContent="حدث خطأ أثناء الاتصال بالمصدر.";
+  }
+}
+</script>
+
 </body>
 </html>
