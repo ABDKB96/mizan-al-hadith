@@ -1,151 +1,201 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ميزان الحديث</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ميزان الحديث</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0%, #020617 70%);
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<style>
+:root{
+  --bg1:#020617;
+  --bg2:#0f172a;
+  --gold1:#facc15;
+  --gold2:#f59e0b;
+  --text-soft:#cbd5f5;
+}
 
-    .app {
-      width: 100%;
-      max-width: 420px;
-      padding: 18px;
-    }
+*{box-sizing:border-box}
 
-    .card {
-      background: rgba(15, 23, 42, 0.92);
-      border-radius: 24px;
-      padding: 28px 22px 30px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.5);
-    }
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, #1e293b 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #020617 0%, transparent 45%),
+    linear-gradient(180deg,var(--bg2),var(--bg1));
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
 
-    h1 {
-      text-align: center;
-      margin: 0 0 6px;
-      font-size: 26px;
-      letter-spacing: .4px;
-    }
+/* غلاف زخرفي */
+.hero{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:18%;
+  left:50%;
+  transform:translateX(-50%);
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle,rgba(250,204,21,.25),transparent 70%);
+  filter:blur(40px);
+}
 
-    .quote {
-      text-align: center;
-      color: #fbbf24;
-      font-size: 14px;
-      margin-bottom: 26px;
-      line-height: 1.7;
-    }
+.app{
+  width:100%;
+  max-width:430px;
+  padding:18px;
+  position:relative;
+  z-index:1;
+}
 
-    textarea {
-      width: 100%;
-      height: 130px;
-      resize: none;
-      border-radius: 18px;
-      border: none;
-      padding: 14px 16px;
-      font-size: 16px;
-      box-sizing: border-box;
-      outline: none;
-      background: #ffffff;
-      color: #000;
-    }
+.card{
+  background:rgba(15,23,42,.94);
+  border-radius:26px;
+  padding:30px 22px 28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+}
 
-    .btn {
-      margin-top: 18px;
-      width: 100%;
-      height: 48px;
-      border-radius: 18px;
-      border: none;
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      color: #000;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+/* العنوان */
+h1{
+  text-align:center;
+  margin:0;
+  font-size:27px;
+  letter-spacing:.6px;
+}
 
-    .btn:active {
-      transform: scale(0.98);
-    }
+/* الأثر */
+.quote{
+  margin-top:10px;
+  text-align:center;
+  color:var(--gold1);
+  font-size:14px;
+  line-height:1.8;
+  margin-bottom:30px;
+}
 
-    .footer {
-      margin-top: 28px;
-      text-align: center;
-    }
+/* مربع الإدخال */
+textarea{
+  width:100%;
+  height:135px;
+  border-radius:20px;
+  border:none;
+  padding:16px;
+  font-size:16px;
+  outline:none;
+  resize:none;
+}
 
-    .paypal-card {
-      display: block;
-      margin: 0 auto 14px;
-      background: linear-gradient(135deg, #ffffff, #f1f5f9);
-      color: #000;
-      border-radius: 18px;
-      padding: 14px 18px;
-      text-decoration: none;
-      width: 100%;
-      max-width: 260px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-    }
+/* زر التحقق */
+.main-btn{
+  margin-top:20px;
+  width:100%;
+  height:52px;
+  border-radius:20px;
+  border:none;
+  background:linear-gradient(135deg,var(--gold1),var(--gold2));
+  color:#000;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(250,204,21,.45);
+}
+.main-btn:active{transform:scale(.97)}
 
-    .paypal-card span {
-      display: block;
-      font-weight: 600;
-      font-size: 15px;
-    }
+/* الفوتر */
+.footer{
+  margin-top:32px;
+  text-align:center;
+}
 
-    .paypal-card small {
-      font-size: 12px;
-      color: #475569;
-    }
+/* زر PayPal */
+.paypal{
+  display:block;
+  margin:0 auto 16px;
+  padding:16px 18px;
+  max-width:280px;
+  border-radius:20px;
+  background:
+    linear-gradient(135deg,#ffffff,#f1f5f9);
+  color:#000;
+  text-decoration:none;
+  box-shadow:0 14px 35px rgba(0,0,0,.35);
+}
+.paypal strong{
+  display:block;
+  font-size:15px;
+  margin-bottom:4px;
+}
+.paypal span{
+  font-size:12px;
+  color:#475569;
+}
 
-    .signature {
-      margin-top: 10px;
-      line-height: 1.8;
-      font-size: 12px;
-      color: #94a3b8;
-    }
-  </style>
+/* التوقيع */
+.signature{
+  font-size:12px;
+  line-height:1.9;
+  color:var(--text-soft);
+}
+.signature .user{
+  opacity:.85;
+}
+.signature .dua{
+  margin-top:6px;
+  font-style:italic;
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="card">
 
-      <h1>ميزان الحديث</h1>
+<div class="hero"></div>
 
-      <div class="quote">
-        "إن هذا العلم دين، فانظروا عمن تأخذون دينكم"
-      </div>
+<div class="app">
+  <div class="card">
 
-      <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
+    <h1>ميزان الحديث</h1>
 
-      <button class="btn">تحقق من الحديث</button>
+    <div class="quote">
+      "إن هذا العلم دين، فانظروا عمن تأخذون دينكم"
+    </div>
 
-      <div class="footer">
+    <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
 
-        <a
-          href="https://www.paypal.me/abdkb96"
-          target="_blank"
-          class="paypal-card"
-        >
-          <span>المساهمة في الوقف</span>
-          <small>الدفع عبر PayPal</small>
-        </a>
+    <button class="main-btn">
+      تحقق من الحديث
+    </button>
 
-        <div class="signature">
-          إعداد عبدالفتاح الشوابكة (abdkb96@)<br>
+    <div class="footer">
+
+      <a
+        class="paypal"
+        href="https://www.paypal.me/abdkb96"
+        target="_blank">
+        <strong>المساهمة في الوقف</strong>
+        <span>الدفع عبر PayPal</span>
+      </a>
+
+      <div class="signature">
+        <div class="user">
+          إعداد عبدالفتاح الشوابكة (@abdkb96)
+        </div>
+        <div class="dua">
           صدقة جارية – لا تنسونا من الدعاء
         </div>
-
       </div>
+
     </div>
+
   </div>
+</div>
+
 </body>
 </html>
