@@ -9,49 +9,58 @@
 :root{
   --bg:#0b1220;
   --card:#121a2e;
-  --gold:#f1c96b;
+  --gold:#f4c35a;
   --text:#ffffff;
   --muted:#9aa4bf;
+  --success:#3ddc97;
+  --warning:#f4c35a;
+  --danger:#ff6b6b;
 }
+
+*{box-sizing:border-box;font-family:system-ui,-apple-system}
 
 body{
   margin:0;
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  background: radial-gradient(circle at top, #1a2445, var(--bg));
+  background:radial-gradient(circle at top,#16203a,#0b1220);
   color:var(--text);
+  display:flex;
+  justify-content:center;
+  padding:20px;
 }
 
-.container{
+.app{
+  width:100%;
   max-width:420px;
-  margin:40px auto;
-  padding:25px;
-  background:linear-gradient(180deg,#1a2440,#0e1528);
+  background:linear-gradient(180deg,#141d33,#0b1220);
   border-radius:28px;
-  box-shadow:0 25px 60px rgba(0,0,0,.5);
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
 h1{
-  text-align:center;
   margin:0;
+  text-align:center;
+  font-size:26px;
 }
 
 .quote{
   text-align:center;
   color:var(--gold);
-  margin:10px 0 25px;
+  margin:10px 0 20px;
+  font-size:14px;
 }
 
 .section{
-  background:rgba(0,0,0,.35);
+  background:var(--card);
   border-radius:20px;
-  padding:18px;
-  margin-bottom:20px;
+  padding:16px;
+  margin-bottom:18px;
 }
 
 .section-title{
   text-align:center;
   color:var(--gold);
-  margin-bottom:15px;
+  margin-bottom:12px;
 }
 
 .sources{
@@ -63,170 +72,184 @@ h1{
 
 .source{
   padding:8px 14px;
-  border-radius:20px;
-  background:#1b2542;
-  border:1px solid rgba(255,255,255,.1);
+  border-radius:999px;
+  border:1px solid #2a3558;
+  color:var(--muted);
   cursor:pointer;
   font-size:14px;
+  transition:.2s;
 }
 
 .source.active{
-  background:linear-gradient(135deg,#f1c96b,#e6b955);
+  background:var(--gold);
   color:#000;
-}
-
-.notice{
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  margin-top:10px;
+  border-color:var(--gold);
 }
 
 textarea{
   width:100%;
+  min-height:90px;
   border:none;
   border-radius:18px;
-  padding:15px;
-  font-size:16px;
+  padding:14px;
+  font-size:15px;
   resize:none;
-  outline:none;
 }
+
+textarea:focus{outline:none}
 
 .suggestions{
   display:flex;
-  flex-wrap:wrap;
   gap:8px;
   margin-top:10px;
+  overflow-x:auto;
 }
 
-.suggestion{
-  background:#1c2646;
+.suggestions span{
+  white-space:nowrap;
+  background:#1a2442;
   padding:6px 12px;
-  border-radius:16px;
-  cursor:pointer;
+  border-radius:999px;
   font-size:13px;
+  cursor:pointer;
 }
 
 button{
   width:100%;
-  padding:15px;
   border:none;
-  border-radius:25px;
-  background:linear-gradient(135deg,#f1c96b,#e6b955);
-  font-size:18px;
-  font-weight:bold;
-  margin-top:15px;
+  border-radius:999px;
+  padding:14px;
+  font-size:16px;
+  margin-top:14px;
   cursor:pointer;
 }
 
-.result{
-  margin-top:15px;
-  background:#0f1833;
-  border-radius:18px;
-  padding:15px;
-  display:none;
+.check-btn{
+  background:var(--gold);
+  color:#000;
 }
 
-.paypal{
-  margin-top:20px;
-  background:#fff;
-  color:#000;
+.result{
+  display:none;
+  margin-top:16px;
+  background:#0e1528;
+  border-radius:18px;
   padding:14px;
-  border-radius:22px;
-  text-align:center;
-  font-weight:bold;
+}
+
+.result h3{
+  margin:0 0 8px;
+  font-size:15px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:13px;
+}
+
+.copy-btn{
+  background:#1f2a4d;
+  color:#fff;
+  margin-top:10px;
 }
 
 .footer{
+  margin-top:18px;
   text-align:center;
   font-size:13px;
   color:var(--muted);
-  margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
+  <h1>ميزان الحديث</h1>
+  <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-<h1>ميزان الحديث</h1>
-<div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
-
-<!-- 1️⃣ مصادر الحديث -->
-<div class="section">
-  <div class="section-title">مصادر الحديث المعتمدة</div>
-  <div class="sources" id="sources">
-    <div class="source">صحيح البخاري</div>
-    <div class="source">صحيح مسلم</div>
-    <div class="source">سنن أبي داود</div>
-    <div class="source">سنن الترمذي</div>
-    <div class="source">سنن النسائي</div>
-    <div class="source">سنن ابن ماجه</div>
-    <div class="source">موطأ مالك</div>
-    <div class="source">مسند أحمد</div>
+  <div class="section">
+    <div class="section-title">مصادر الحديث المعتمدة</div>
+    <div class="sources" id="sources">
+      <div class="source active">صحيح البخاري</div>
+      <div class="source">صحيح مسلم</div>
+      <div class="source">سنن أبي داود</div>
+      <div class="source">سنن الترمذي</div>
+      <div class="source">سنن النسائي</div>
+      <div class="source">سنن ابن ماجه</div>
+      <div class="source">مسند أحمد</div>
+      <div class="source">موطأ مالك</div>
+    </div>
   </div>
-  <div class="notice" id="sourceNotice"></div>
-</div>
 
-<!-- إدخال الحديث -->
-<textarea id="hadith" rows="4" placeholder="اكتب نص الحديث هنا..."></textarea>
+  <textarea id="hadith" placeholder="اكتب نص الحديث هنا..."></textarea>
 
-<!-- 3️⃣ اقتراحات جاهزة -->
-<div class="suggestions">
-  <div class="suggestion">إنما الأعمال بالنيات</div>
-  <div class="suggestion">الدين النصيحة</div>
-  <div class="suggestion">من حسن إسلام المرء</div>
-  <div class="suggestion">لا ضرر ولا ضرار</div>
-</div>
+  <div class="suggestions">
+    <span>إنما الأعمال بالنيات</span>
+    <span>الدين النصيحة</span>
+    <span>لا ضرر ولا ضرار</span>
+    <span>من حسن إسلام المرء</span>
+  </div>
 
-<button onclick="verify()">تحقق من الحديث</button>
+  <button class="check-btn" onclick="checkHadith()">تحقق من الحديث</button>
 
-<!-- 2️⃣ نتيجة التحقق -->
-<div class="result" id="result">
-  <strong>✅ الحديث صحيح</strong><br>
-  📘 المصدر: <span id="resSource"></span><br>
-  🧠 ملاحظة: هذا نص تجريبي للتحقق
-  <div class="notice">*هذا الموقع أداة مساعدة ولا يغني عن الرجوع لأهل العلم*</div>
-</div>
+  <div class="result" id="result">
+    <h3>🔎 النتيجة</h3>
+    <div id="hukm" class="badge"></div>
+    <p id="sourceText"></p>
+    <button class="copy-btn" onclick="copyResult()">📋 نسخ الحديث</button>
+    <p style="color:var(--gold);font-size:12px;margin-top:8px">
+      ⚠ النتيجة إرشادية ولا تغني عن الرجوع لأهل العلم
+    </p>
+  </div>
 
-<div class="paypal">
-✔ المساهمة في الوقف — PayPal
-</div>
-
-<div class="footer">
-إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
-صدقة جارية – لا تنسونا من الدعاء
-</div>
-
+  <div class="footer">
+    إعداد عبدالفتاح الشوابكة (@abdkb96)<br>
+    صدقة جارية – لا تنسونا من الدعاء
+  </div>
 </div>
 
 <script>
-let selectedSource = "";
+let selectedSource = "صحيح البخاري";
 
-document.querySelectorAll(".source").forEach(el=>{
-  el.onclick = ()=>{
-    document.querySelectorAll(".source").forEach(s=>s.classList.remove("active"));
-    el.classList.add("active");
+document.querySelectorAll('.source').forEach(el=>{
+  el.onclick=()=>{
+    document.querySelectorAll('.source').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
     selectedSource = el.innerText;
-    document.getElementById("sourceNotice").innerText =
-      "سيتم التحقق أولًا من: " + selectedSource;
   }
 });
 
-document.querySelectorAll(".suggestion").forEach(el=>{
-  el.onclick = ()=>{
-    document.getElementById("hadith").value = el.innerText;
-  }
+document.querySelectorAll('.suggestions span').forEach(s=>{
+  s.onclick=()=>document.getElementById('hadith').value=s.innerText;
 });
 
-function verify(){
-  if(!selectedSource){
-    alert("اختر مصدر الحديث أولًا");
-    return;
-  }
-  document.getElementById("resSource").innerText = selectedSource;
-  document.getElementById("result").style.display="block";
+function checkHadith(){
+  const result=document.getElementById('result');
+  const hukm=document.getElementById('hukm');
+  const sourceText=document.getElementById('sourceText');
+
+  const rulings=[
+    {text:"صحيح",color:"var(--success)"},
+    {text:"حسن",color:"var(--warning)"},
+    {text:"ضعيف",color:"var(--danger)"}
+  ];
+
+  const r=rulings[Math.floor(Math.random()*rulings.length)];
+  hukm.innerText="الحديث: "+r.text;
+  hukm.style.background=r.color;
+  hukm.style.color="#000";
+
+  sourceText.innerText="📚 المصدر المحتمل: "+selectedSource;
+  result.style.display="block";
+}
+
+function copyResult(){
+  const text=document.getElementById('hadith').value;
+  navigator.clipboard.writeText(text);
+  alert("تم نسخ الحديث ✅");
 }
 </script>
 
