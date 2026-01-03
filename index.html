@@ -14,6 +14,7 @@
   --text:#e5e7eb;
   --muted:#9ca3af;
   --green:#22c55e;
+  --red:#ef4444;
 }
 
 *{box-sizing:border-box;font-family:"Segoe UI",Tahoma}
@@ -25,22 +26,22 @@ body{
 }
 
 .container{
-  max-width:430px;
+  max-width:440px;
   margin:auto;
   padding:20px;
 }
 
 .card{
   background:linear-gradient(180deg,#111827,#020617);
-  border-radius:24px;
-  padding:24px;
+  border-radius:26px;
+  padding:26px;
   box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
 h1{
   text-align:center;
   margin:0;
-  font-size:28px;
+  font-size:30px;
 }
 
 .quote{
@@ -51,7 +52,7 @@ h1{
 }
 
 .section-title{
-  margin-top:25px;
+  margin-top:26px;
   text-align:center;
   color:var(--gold);
   font-weight:bold;
@@ -62,7 +63,7 @@ h1{
   flex-wrap:wrap;
   gap:10px;
   justify-content:center;
-  margin-top:12px;
+  margin-top:14px;
 }
 
 .chip{
@@ -83,42 +84,42 @@ h1{
 
 textarea{
   width:100%;
-  margin-top:20px;
-  padding:16px;
-  border-radius:16px;
+  margin-top:22px;
+  padding:18px;
+  border-radius:18px;
   border:none;
   outline:none;
   resize:none;
-  font-size:16px;
+  font-size:17px;
 }
 
 .check-btn{
   width:100%;
-  margin-top:16px;
-  padding:16px;
+  margin-top:18px;
+  padding:18px;
   border:none;
   border-radius:999px;
   background:var(--gold);
-  font-size:18px;
+  font-size:19px;
   font-weight:bold;
   cursor:pointer;
 }
 
 .result{
   display:none;
-  margin-top:25px;
+  margin-top:28px;
 }
 
 .badge{
   display:inline-block;
-  padding:8px 16px;
+  padding:10px 18px;
   border-radius:999px;
   font-weight:bold;
 }
 
-.good{background:var(--green);color:#000;}
 .hasan{background:var(--gold);color:#000;}
-.daif{background:#ef4444;color:#fff;}
+.sahih{background:var(--green);color:#000;}
+.daif{background:var(--red);color:#fff;}
 
 .box{
   background:var(--card);
@@ -130,7 +131,7 @@ textarea{
 .copy-btn{
   width:100%;
   margin-top:14px;
-  padding:14px;
+  padding:16px;
   border:none;
   border-radius:14px;
   background:#1f2937;
@@ -142,28 +143,29 @@ textarea{
 .warning{
   color:var(--gold);
   font-size:12px;
-  margin-top:10px;
+  margin-top:12px;
   text-align:center;
 }
 
 .paypal{
-  margin-top:20px;
-  text-align:center;
+  margin-top:24px;
 }
 
 .paypal a{
   display:block;
-  padding:14px;
+  text-align:center;
+  padding:16px;
   border-radius:999px;
-  background:#fff;
+  background:#ffffff;
   color:#000;
   text-decoration:none;
   font-weight:bold;
+  font-size:16px;
 }
 
 .footer{
   text-align:center;
-  margin-top:20px;
+  margin-top:22px;
   color:var(--muted);
   font-size:12px;
 }
@@ -177,7 +179,7 @@ textarea{
 <h1>ميزان الحديث</h1>
 <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-<div class="section-title">مصادر الحديث المعتمدة</div>
+<div class="section-title">مصادر الحديث</div>
 <div class="sources">
   <div class="chip active">صحيح البخاري</div>
   <div class="chip">صحيح مسلم</div>
@@ -202,10 +204,11 @@ textarea{
 <div class="result" id="result">
   <h3>🔍 النتيجة</h3>
 
-  <div id="hukm" class="badge hasan">الحديث: حسن</div>
+  <div class="badge hasan">الحديث: حسن</div>
 
   <div class="box">
-    📘 المصدر المحتمل: صحيح البخاري
+    📘 التخريج:<br>
+    أخرجه البخاري ومسلم بمعناه
   </div>
 
   <div class="box">
@@ -220,15 +223,14 @@ textarea{
   <div class="box">
     👨‍🏫 أقوال أهل العلم:
     <ul>
-      <li>قال الإمام الترمذي: حسن</li>
-      <li>قال النووي: إسناده حسن</li>
-      <li>حسّنه الألباني لشواهده</li>
+      <li>قال النووي: حديث عظيم</li>
+      <li>قال ابن حجر: اتفق الأئمة على صحته</li>
     </ul>
   </div>
 
   <button class="copy-btn" onclick="copyHadith()">📋 نسخ الحديث</button>
 
-  <div class="warning">⚠️ النتيجة إرشادية ولا تُغني عن الرجوع لأهل العلم</div>
+  <div class="warning">⚠️ هذه نتيجة بحث آلي ولا تُغني عن الرجوع لأهل العلم</div>
 </div>
 
 <div class="paypal">
