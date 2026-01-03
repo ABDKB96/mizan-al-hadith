@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ميزان الحديث</title>
 
 <style>
@@ -54,20 +53,44 @@ h1 {
   font-size: 15px;
 }
 
-.hero {
-  margin: 22px 0 18px;
+/* مصادر الحديث */
+.sources {
+  margin: 22px 0;
   background: #0d1428;
   border-radius: 22px;
   padding: 18px;
 }
 
-.hero img {
-  width: 100%;
-  border-radius: 18px;
-  display: block;
-  box-shadow: 0 20px 50px rgba(0,0,0,.7);
+.sources-title {
+  text-align: center;
+  color: var(--gold-soft);
+  font-size: 14px;
+  margin-bottom: 14px;
 }
 
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.source {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e2a4d, #111a33);
+  color: #fff;
+  font-size: 13px;
+  border: 1px solid rgba(245,193,91,.25);
+  transition: all .25s ease;
+}
+
+.source:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245,193,91,.35);
+}
+
+/* الإدخال */
 textarea {
   width: 100%;
   border: none;
@@ -134,9 +157,19 @@ textarea {
   <h1>ميزان الحديث</h1>
   <div class="quote">"إن هذا العلم دين، فانظروا عمن تأخذون دينكم"</div>
 
-  <!-- الصورة -->
-  <div class="hero">
-    <img src="./books.jpg" alt="كتب الحديث">
+  <!-- مصادر الحديث -->
+  <div class="sources">
+    <div class="sources-title">مصادر الحديث المعتمدة</div>
+    <div class="source-list">
+      <div class="source">صحيح البخاري</div>
+      <div class="source">صحيح مسلم</div>
+      <div class="source">سنن أبي داود</div>
+      <div class="source">سنن الترمذي</div>
+      <div class="source">سنن النسائي</div>
+      <div class="source">سنن ابن ماجه</div>
+      <div class="source">موطأ مالك</div>
+      <div class="source">مسند أحمد</div>
+    </div>
   </div>
 
   <textarea placeholder="اكتب نص الحديث هنا..."></textarea>
@@ -144,7 +177,7 @@ textarea {
   <button class="btn-main">تحقق من الحديث</button>
 
   <a class="btn-paypal" href="https://www.paypal.me/abdkb96" target="_blank">
-    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal">
+    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png">
     المساهمة في الوقف ✓
   </a>
 
