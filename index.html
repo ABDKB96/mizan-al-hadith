@@ -50,6 +50,7 @@ h1{text-align:center;margin:0;}
   justify-content:center;
 }
 
+/* الأزرار */
 .chip{
   padding:10px 14px;
   border-radius:999px;
@@ -60,6 +61,7 @@ h1{text-align:center;margin:0;}
   transition:all .25s ease;
 }
 
+/* التفعيل + إضاءة */
 .chip.active{
   background:var(--gold);
   color:#000;
@@ -87,7 +89,6 @@ textarea{
   background:var(--gold);
   font-size:18px;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .result{
@@ -95,7 +96,6 @@ textarea{
   background:#020617;
   border-radius:18px;
   padding:16px;
-  display:none;
 }
 
 .badge{
@@ -124,7 +124,6 @@ textarea{
   background:#1f2937;
   color:#fff;
   font-size:16px;
-  cursor:pointer;
 }
 
 .paypal a{
@@ -174,7 +173,7 @@ textarea{
   <div class="chip">موطأ مالك</div>
 </div>
 
-<textarea id="hadithInput" rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
+<textarea rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
 
 <div class="suggestions" id="suggestions" style="margin-top:12px">
   <div class="chip">إنما الأعمال بالنيات</div>
@@ -182,25 +181,32 @@ textarea{
   <div class="chip">لا ضرر ولا ضرار</div>
 </div>
 
-<button class="check-btn" id="checkBtn">تحقق من الحديث</button>
+<button class="check-btn">تحقق من الحديث</button>
 
-<div class="result" id="resultBox">
+<div class="result">
   <h3>🔎 النتيجة</h3>
-  <div class="badge good" id="statusBadge"></div>
-  <p id="sourceText"></p>
+  <div class="badge good">الحديث: صحيح</div>
+  <p>📚 المصدر المحتمل: صحيح البخاري</p>
+
+  <div class="box">
+    <strong>🔍 أسباب الحكم:</strong>
+    <ul>
+      <li>اتصال السند</li>
+      <li>جميع الرواة ثقات</li>
+      <li>الحديث مروي في الصحيح</li>
+    </ul>
+  </div>
 
   <div class="box">
     <strong>👨‍🏫 أقوال أهل العلم:</strong>
-    <ul id="scholarsList"></ul>
+    <ul>
+      <li>قال الإمام البخاري: حديث صحيح</li>
+      <li>قال الإمام النووي: متفق على صحته</li>
+      <li>صححه ابن حجر العسقلاني</li>
+    </ul>
   </div>
 
-  <div class="box">
-    <strong>📖 التخريج:</strong>
-    <p id="takhreej"></p>
-  </div>
-
-  <button class="copy-btn" id="copyBtn">📋 نسخ الحديث</button>
-  <button class="copy-btn" id="shareBtn">📤 مشاركة النتيجة</button>
+  <button class="copy-btn">📋 نسخ الحديث</button>
 
   <div class="warning">
     ⚠️ النتيجة إرشادية ولا تُغني عن الرجوع لأهل العلم
@@ -222,8 +228,7 @@ textarea{
 </div>
 
 <script>
-const API_URL = "https://wispy-river-34a5.jok720er.workers.dev/";
-
+/* تفعيل أزرار المصادر */
 document.querySelectorAll("#sources .chip").forEach(chip=>{
   chip.addEventListener("click",()=>{
     document.querySelectorAll("#sources .chip")
@@ -232,54 +237,15 @@ document.querySelectorAll("#sources .chip").forEach(chip=>{
   });
 });
 
+/* تفعيل أزرار الاقتراحات */
 document.querySelectorAll("#suggestions .chip").forEach(chip=>{
   chip.addEventListener("click",()=>{
     document.querySelectorAll("#suggestions .chip")
       .forEach(c=>c.classList.remove("active"));
     chip.classList.add("active");
-    document.getElementById("hadithInput").value = chip.innerText;
+    document.querySelector("textarea").value = chip.innerText;
   });
 });
-
-document.getElementById("checkBtn").onclick = async () => {
-  const text = document.getElementById("hadithInput").value.trim();
-  if(!text) return;
-
-  const res = await fetch(API_URL,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ text })
-  });
-
-  const data = await res.json();
-
-  document.getElementById("resultBox").style.display="block";
-  document.getElementById("statusBadge").innerText="الحديث: صحيح";
-  document.getElementById("sourceText").innerText="📚 المصدر المحتمل: " + data.source;
-  document.getElementById("takhreej").innerText=data.takhreej;
-
-  const list=document.getElementById("scholarsList");
-  list.innerHTML="";
-  data.rulings.forEach(r=>{
-    const li=document.createElement("li");
-    li.textContent=`${r.scholar}: ${r.grade}`;
-    list.appendChild(li);
-  });
-};
-
-document.getElementById("copyBtn").onclick=()=>{
-  navigator.clipboard.writeText(document.getElementById("hadithInput").value);
-};
-
-document.getElementById("shareBtn").onclick=async()=>{
-  const text=document.getElementById("hadithInput").value;
-  if(navigator.share){
-    await navigator.share({ title:"ميزان الحديث", text });
-  } else {
-    navigator.clipboard.writeText(text);
-    alert("تم النسخ للمشاركة");
-  }
-};
 </script>
 
 </body>
