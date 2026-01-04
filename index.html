@@ -257,12 +257,31 @@ document.getElementById("checkBtn").onclick = async () => {
   document.getElementById("statusBadge").innerText="الحديث: صحيح";
   document.getElementById("sourceText").innerText="📚 المصدر المحتمل: " + data.source;
   document.getElementById("takhreej").innerText=data.takhreej;
-
+document.getElementById("scholarsSection").style.display="block";
   const list=document.getElementById("scholarsList");
   list.innerHTML="";
   data.rulings.forEach(r=>{
     const li=document.createElement("li");
-    li.textContent=`${r.scholar}: ${r.grade}`;
+    data.rulings.forEach(r=>{
+  const li=document.createElement("li");
+
+  let color = "#9ca3af"; // افتراضي
+  if (r.grade.includes("صحيح")) color = "#22c55e";
+  else if (r.grade.includes("حسن")) color = "#eab308";
+  else if (r.grade.includes("ضعيف")) color = "#ef4444";
+
+  li.innerHTML = `
+    <strong style="color:${color}">
+      ${r.scholar} — ${r.grade}
+    </strong>
+    <div style="font-size:13px;color:#9ca3af;margin-top:4px">
+      ${r.reason}
+    </div>
+  `;
+
+  list.appendChild(li);
+});
+`;
     list.appendChild(li);
   });
 };
