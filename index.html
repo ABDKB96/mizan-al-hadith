@@ -260,8 +260,11 @@ document.getElementById("checkBtn").onclick = async () => {
 document.getElementById("scholarsSection").style.display="block";
   const list=document.getElementById("scholarsList");
   list.innerHTML="";
-  data.rulings.forEach(r=>{
-    const li=document.createElement("li");
+data.rulings.sort((a,b)=>{
+  const order = ["الألباني","البخاري","مسلم"];
+  return (order.indexOf(a.scholar) === -1 ? 99 : order.indexOf(a.scholar))
+       - (order.indexOf(b.scholar) === -1 ? 99 : order.indexOf(b.scholar));
+});  
     data.rulings.forEach(r=>{
   const li=document.createElement("li");
 
@@ -279,7 +282,7 @@ document.getElementById("scholarsSection").style.display="block";
     </div>
   `;
 
-  list.appendChild(li);
+ 
 });
 `;
     list.appendChild(li);
