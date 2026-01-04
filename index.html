@@ -173,7 +173,7 @@ textarea{
   <div class="chip">موطأ مالك</div>
 </div>
 
-<textarea id="myInput" rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
+<textarea rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
 
 <div class="suggestions" id="suggestions" style="margin-top:12px">
   <div class="chip">إنما الأعمال بالنيات</div>
@@ -181,21 +181,29 @@ textarea{
   <div class="chip">لا ضرر ولا ضرار</div>
 </div>
 
-<button id="myBtn" class="check-btn">تحقق من الحديث</button>
+<button class="check-btn">تحقق من الحديث</button>
 
-<div class="result" id="myResult">
+<div class="result">
   <h3>🔎 النتيجة</h3>
-  <div id="myBadge" class="badge good">الحديث: صحيح</div>
-  <p id="mySource">📚 المصدر المحتمل: صحيح البخاري</p>
+  <div class="badge good">الحديث: صحيح</div>
+  <p>📚 المصدر المحتمل: صحيح البخاري</p>
 
   <div class="box">
-    <strong>🔍 نص الحديث:</strong>
-    <p id="myHadithText"></p>
+    <strong>🔍 أسباب الحكم:</strong>
+    <ul>
+      <li>اتصال السند</li>
+      <li>جميع الرواة ثقات</li>
+      <li>الحديث مروي في الصحيح</li>
+    </ul>
   </div>
 
   <div class="box">
-    <strong>👨‍🏫 حكم المحدث:</strong>
-    <p id="myVerdict"></p>
+    <strong>👨‍🏫 أقوال أهل العلم:</strong>
+    <ul>
+      <li>قال الإمام البخاري: حديث صحيح</li>
+      <li>قال الإمام النووي: متفق على صحته</li>
+      <li>صححه ابن حجر العسقلاني</li>
+    </ul>
   </div>
 
   <button class="copy-btn">📋 نسخ الحديث</button>
@@ -220,7 +228,7 @@ textarea{
 </div>
 
 <script>
-/* تفعيل أزرار المصادر - كما هي */
+/* تفعيل أزرار المصادر */
 document.querySelectorAll("#sources .chip").forEach(chip=>{
   chip.addEventListener("click",()=>{
     document.querySelectorAll("#sources .chip")
@@ -229,7 +237,7 @@ document.querySelectorAll("#sources .chip").forEach(chip=>{
   });
 });
 
-/* تفعيل أزرار الاقتراحات - كما هي */
+/* تفعيل أزرار الاقتراحات */
 document.querySelectorAll("#suggestions .chip").forEach(chip=>{
   chip.addEventListener("click",()=>{
     document.querySelectorAll("#suggestions .chip")
@@ -237,32 +245,6 @@ document.querySelectorAll("#suggestions .chip").forEach(chip=>{
     chip.classList.add("active");
     document.querySelector("textarea").value = chip.innerText;
   });
-});
-
-/* ربط الـ API بدون تعديل شكل الكود */
-document.getElementById("myBtn").addEventListener("click", async function() {
-    const text = document.getElementById("myInput").value;
-    if(!text) return alert("اكتب شيئاً");
-    
-    this.innerText = "جاري البحث...";
-    
-    try {
-        const res = await fetch(`https://hadis-api-id.vercel.app/hadith/search?query=${encodeURIComponent(text)}`);
-        const data = await res.json();
-        
-        // هنا نضع البيانات في نفس مربعاتك بدون تغيير تصميمك
-        if(data.data && data.data.length > 0) {
-            const h = data.data[0];
-            document.getElementById("myHadithText").innerText = h.hadith;
-            document.getElementById("mySource").innerText = "📚 المصدر: " + h.source;
-            document.getElementById("myVerdict").innerText = "تم العثور على الحديث في المراجع المعتمدة";
-            document.getElementById("myBadge").innerText = "تم التحقق";
-        }
-    } catch(e) {
-        console.log("خطأ في الاتصال");
-    } finally {
-        this.innerText = "تحقق من الحديث";
-    }
 });
 </script>
 
