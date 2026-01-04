@@ -299,7 +299,26 @@ document.getElementById("shareBtn").onclick=async()=>{
   }
 };
 
-</script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+  const checkBtn = document.getElementById("checkBtn");
+  if (!checkBtn) return;
+
+  checkBtn.onclick = async () => {
+    const text = document.getElementById("hadithInput").value.trim();
+
+    if (!text) {
+      alert("اكتب جزءًا من الحديث أولًا");
+      return;
+    }
+
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("statusBadge").innerText = "⏳ جاري التحقق...";
+    document.getElementById("sourceText").innerText = "";
+    document.getElementById("takhreej").innerText = "";
+  };
+
+  </script>
 
 </body>
 </html>
