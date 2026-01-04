@@ -50,7 +50,6 @@ h1{text-align:center;margin:0;}
   justify-content:center;
 }
 
-/* الأزرار */
 .chip{
   padding:10px 14px;
   border-radius:999px;
@@ -61,7 +60,6 @@ h1{text-align:center;margin:0;}
   transition:all .25s ease;
 }
 
-/* التفعيل + إضاءة */
 .chip.active{
   background:var(--gold);
   color:#000;
@@ -89,6 +87,12 @@ textarea{
   background:var(--gold);
   font-size:18px;
   font-weight:bold;
+  cursor:pointer;
+}
+
+.check-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .result{
@@ -96,6 +100,7 @@ textarea{
   background:#020617;
   border-radius:18px;
   padding:16px;
+  display:none;
 }
 
 .badge{
@@ -107,6 +112,8 @@ textarea{
 }
 
 .good{background:#22c55e;color:#000;}
+.weak{background:#ef4444;color:#fff;}
+.hasan{background:#facc15;color:#000;}
 
 .box{
   background:#020617;
@@ -173,7 +180,7 @@ textarea{
   <div class="chip">موطأ مالك</div>
 </div>
 
-<textarea rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
+<textarea id="hadithText" rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
 
 <div class="suggestions" id="suggestions" style="margin-top:12px">
   <div class="chip">إنما الأعمال بالنيات</div>
@@ -181,32 +188,24 @@ textarea{
   <div class="chip">لا ضرر ولا ضرار</div>
 </div>
 
-<button class="check-btn">تحقق من الحديث</button>
+<button class="check-btn" id="checkBtn">تحقق من الحديث</button>
 
-<div class="result">
+<div class="result" id="resultBox">
   <h3>🔎 النتيجة</h3>
-  <div class="badge good">الحديث: صحيح</div>
-  <p>📚 المصدر المحتمل: صحيح البخاري</p>
+  <div class="badge" id="statusBadge"></div>
+  <p id="sourceText"></p>
 
   <div class="box">
     <strong>🔍 أسباب الحكم:</strong>
-    <ul>
-      <li>اتصال السند</li>
-      <li>جميع الرواة ثقات</li>
-      <li>الحديث مروي في الصحيح</li>
-    </ul>
+    <ul id="reasons"></ul>
   </div>
 
   <div class="box">
     <strong>👨‍🏫 أقوال أهل العلم:</strong>
-    <ul>
-      <li>قال الإمام البخاري: حديث صحيح</li>
-      <li>قال الإمام النووي: متفق على صحته</li>
-      <li>صححه ابن حجر العسقلاني</li>
-    </ul>
+    <ul id="scholars"></ul>
   </div>
 
-  <button class="copy-btn">📋 نسخ الحديث</button>
+  <button class="copy-btn" id="copyBtn">📋 نسخ الحديث</button>
 
   <div class="warning">
     ⚠️ النتيجة إرشادية ولا تُغني عن الرجوع لأهل العلم
@@ -228,24 +227,78 @@ textarea{
 </div>
 
 <script>
-/* تفعيل أزرار المصادر */
+// ====== API CONFIG (جاهز للاستبدال لاحقًا) ======
+const API_URL = "MOCK";
+
+// Mock API (آمن – مؤقت)
+function mockApiRequest(text, source){
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      resolve({
+        status:"صحيح",
+        source:source,
+        reasons:["اتصال السند","الرواة ثقات","مروي في الصحيح"],
+        scholars:[
+          "قال الإمام البخاري: حديث صحيح",
+          "قال الإمام النووي: متفق على صحته",
+          "صححه ابن حجر العسقلاني"
+        ]
+      });
+    },1200);
+  });
+}
+
+// ====== UI Logic ======
+const btn = document.getElementById("checkBtn");
+const resultBox = document.getElementById("resultBox");
+
+btn.onclick = async ()=>{
+  const text = hadithText.value.trim();
+  if(!text) return alert("اكتب نص الحديث أولاً");
+
+  btn.disabled = true;
+  btn.innerText = "جارٍ التحقق...";
+
+  const source = document.querySelector("#sources .chip.active").innerText;
+
+  const data = await mockApiRequest(text,source);
+
+  resultBox.style.display="block";
+  const badge = document.getElementById("statusBadge");
+  badge.innerText = "الحديث: " + data.status;
+  badge.className = "badge good";
+
+  document.getElementById("sourceText").innerText =
+    "📚 المصدر المحتمل: " + data.source;
+
+  reasons.innerHTML = data.reasons.map(r=>`<li>${r}</li>`).join("");
+  scholars.innerHTML = data.scholars.map(s=>`<li>${s}</li>`).join("");
+
+  btn.disabled = false;
+  btn.innerText = "تحقق من الحديث";
+};
+
+// تفعيل المصادر
 document.querySelectorAll("#sources .chip").forEach(chip=>{
-  chip.addEventListener("click",()=>{
+  chip.onclick=()=>{
     document.querySelectorAll("#sources .chip")
       .forEach(c=>c.classList.remove("active"));
     chip.classList.add("active");
-  });
+  };
 });
 
-/* تفعيل أزرار الاقتراحات */
+// الاقتراحات
 document.querySelectorAll("#suggestions .chip").forEach(chip=>{
-  chip.addEventListener("click",()=>{
-    document.querySelectorAll("#suggestions .chip")
-      .forEach(c=>c.classList.remove("active"));
-    chip.classList.add("active");
-    document.querySelector("textarea").value = chip.innerText;
-  });
+  chip.onclick=()=>{
+    hadithText.value = chip.innerText;
+  };
 });
+
+// نسخ
+copyBtn.onclick=()=>{
+  navigator.clipboard.writeText(hadithText.value);
+  alert("تم نسخ الحديث");
+};
 </script>
 
 </body>
