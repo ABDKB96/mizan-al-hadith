@@ -90,11 +90,6 @@ textarea{
   cursor:pointer;
 }
 
-.check-btn:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
 .result{
   margin-top:22px;
   background:#020617;
@@ -112,8 +107,6 @@ textarea{
 }
 
 .good{background:#22c55e;color:#000;}
-.weak{background:#ef4444;color:#fff;}
-.hasan{background:#facc15;color:#000;}
 
 .box{
   background:#020617;
@@ -131,6 +124,7 @@ textarea{
   background:#1f2937;
   color:#fff;
   font-size:16px;
+  cursor:pointer;
 }
 
 .paypal a{
@@ -180,7 +174,7 @@ textarea{
   <div class="chip">موطأ مالك</div>
 </div>
 
-<textarea id="hadithText" rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
+<textarea id="hadithInput" rows="4" placeholder="اكتب جزءًا من نص الحديث..."></textarea>
 
 <div class="suggestions" id="suggestions" style="margin-top:12px">
   <div class="chip">إنما الأعمال بالنيات</div>
@@ -192,20 +186,21 @@ textarea{
 
 <div class="result" id="resultBox">
   <h3>🔎 النتيجة</h3>
-  <div class="badge" id="statusBadge"></div>
+  <div class="badge good" id="statusBadge"></div>
   <p id="sourceText"></p>
 
   <div class="box">
-    <strong>🔍 أسباب الحكم:</strong>
-    <ul id="reasons"></ul>
+    <strong>👨‍🏫 أقوال أهل العلم:</strong>
+    <ul id="scholarsList"></ul>
   </div>
 
   <div class="box">
-    <strong>👨‍🏫 أقوال أهل العلم:</strong>
-    <ul id="scholars"></ul>
+    <strong>📖 التخريج:</strong>
+    <p id="takhreej"></p>
   </div>
 
   <button class="copy-btn" id="copyBtn">📋 نسخ الحديث</button>
+  <button class="copy-btn" id="shareBtn">📤 مشاركة النتيجة</button>
 
   <div class="warning">
     ⚠️ النتيجة إرشادية ولا تُغني عن الرجوع لأهل العلم
@@ -227,77 +222,63 @@ textarea{
 </div>
 
 <script>
-// ====== API CONFIG (جاهز للاستبدال لاحقًا) ======
 const API_URL = "https://wispy-river-34a5.jok720er.workers.dev/";
 
-// Mock API (آمن – مؤقت)
-function mockApiRequest(text, source){
-  return new Promise(resolve=>{
-    setTimeout(()=>{
-      resolve({
-        status:"صحيح",
-        source:source,
-        reasons:["اتصال السند","الرواة ثقات","مروي في الصحيح"],
-        scholars:[
-          "قال الإمام البخاري: حديث صحيح",
-          "قال الإمام النووي: متفق على صحته",
-          "صححه ابن حجر العسقلاني"
-        ]
-      });
-    },1200);
-  });
-}
-
-// ====== UI Logic ======
-const btn = document.getElementById("checkBtn");
-const resultBox = document.getElementById("resultBox");
-
-btn.onclick = async ()=>{
-  const text = hadithText.value.trim();
-  if(!text) return alert("اكتب نص الحديث أولاً");
-
-  btn.disabled = true;
-  btn.innerText = "جارٍ التحقق...";
-
-  const source = document.querySelector("#sources .chip.active").innerText;
-
-  const data = await mockApiRequest(text,source);
-
-  resultBox.style.display="block";
-  const badge = document.getElementById("statusBadge");
-  badge.innerText = "الحديث: " + data.status;
-  badge.className = "badge good";
-
-  document.getElementById("sourceText").innerText =
-    "📚 المصدر المحتمل: " + data.source;
-
-  reasons.innerHTML = data.reasons.map(r=>`<li>${r}</li>`).join("");
-  scholars.innerHTML = data.scholars.map(s=>`<li>${s}</li>`).join("");
-
-  btn.disabled = false;
-  btn.innerText = "تحقق من الحديث";
-};
-
-// تفعيل المصادر
 document.querySelectorAll("#sources .chip").forEach(chip=>{
-  chip.onclick=()=>{
+  chip.addEventListener("click",()=>{
     document.querySelectorAll("#sources .chip")
       .forEach(c=>c.classList.remove("active"));
     chip.classList.add("active");
-  };
+  });
 });
 
-// الاقتراحات
 document.querySelectorAll("#suggestions .chip").forEach(chip=>{
-  chip.onclick=()=>{
-    hadithText.value = chip.innerText;
-  };
+  chip.addEventListener("click",()=>{
+    document.querySelectorAll("#suggestions .chip")
+      .forEach(c=>c.classList.remove("active"));
+    chip.classList.add("active");
+    document.getElementById("hadithInput").value = chip.innerText;
+  });
 });
 
-// نسخ
-copyBtn.onclick=()=>{
-  navigator.clipboard.writeText(hadithText.value);
-  alert("تم نسخ الحديث");
+document.getElementById("checkBtn").onclick = async () => {
+  const text = document.getElementById("hadithInput").value.trim();
+  if(!text) return;
+
+  const res = await fetch(API_URL,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ text })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("resultBox").style.display="block";
+  document.getElementById("statusBadge").innerText="الحديث: صحيح";
+  document.getElementById("sourceText").innerText="📚 المصدر المحتمل: " + data.source;
+  document.getElementById("takhreej").innerText=data.takhreej;
+
+  const list=document.getElementById("scholarsList");
+  list.innerHTML="";
+  data.rulings.forEach(r=>{
+    const li=document.createElement("li");
+    li.textContent=`${r.scholar}: ${r.grade}`;
+    list.appendChild(li);
+  });
+};
+
+document.getElementById("copyBtn").onclick=()=>{
+  navigator.clipboard.writeText(document.getElementById("hadithInput").value);
+};
+
+document.getElementById("shareBtn").onclick=async()=>{
+  const text=document.getElementById("hadithInput").value;
+  if(navigator.share){
+    await navigator.share({ title:"ميزان الحديث", text });
+  } else {
+    navigator.clipboard.writeText(text);
+    alert("تم النسخ للمشاركة");
+  }
 };
 </script>
 
