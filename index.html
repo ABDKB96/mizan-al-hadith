@@ -224,57 +224,67 @@ textarea{
 <script>
 const API_URL = "https://wispy-river-34a5.jok720er.workers.dev/";
 
-document.querySelectorAll("#sources .chip").forEach(chip=>{
-  chip.addEventListener("click",()=>{
+/* تفعيل أزرار المصادر */
+document.querySelectorAll("#sources .chip").forEach(chip => {
+  chip.addEventListener("click", () => {
     document.querySelectorAll("#sources .chip")
-      .forEach(c=>c.classList.remove("active"));
+      .forEach(c => c.classList.remove("active"));
     chip.classList.add("active");
   });
 });
 
-document.querySelectorAll("#suggestions .chip").forEach(chip=>{
-  chip.addEventListener("click",()=>{
+/* تفعيل أزرار الاقتراحات */
+document.querySelectorAll("#suggestions .chip").forEach(chip => {
+  chip.addEventListener("click", () => {
     document.querySelectorAll("#suggestions .chip")
-      .forEach(c=>c.classList.remove("active"));
+      .forEach(c => c.classList.remove("active"));
     chip.classList.add("active");
     document.getElementById("hadithInput").value = chip.innerText;
   });
 });
 
+/* زر تحقق من الحديث */
 document.getElementById("checkBtn").onclick = async () => {
   const text = document.getElementById("hadithInput").value.trim();
-  if(!text) return;
+  if (!text) {
+    alert("اكتب جزءًا من الحديث أولاً");
+    return;
+  }
 
-  const res = await fetch(API_URL,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text })
   });
 
   const data = await res.json();
 
-  document.getElementById("resultBox").style.display="block";
-  document.getElementById("statusBadge").innerText="الحديث: صحيح";
-  document.getElementById("sourceText").innerText="📚 المصدر المحتمل: " + data.source;
-  document.getElementById("takhreej").innerText=data.takhreej;
+  document.getElementById("resultBox").style.display = "block";
+  document.getElementById("statusBadge").innerText = "✔️ الحديث: " + data.grade;
+  document.getElementById("sourceText").innerText = "📚 المصدر: " + data.source;
+  document.getElementById("takhreej").innerText = data.takhreej;
 
-  const list=document.getElementById("scholarsList");
-  list.innerHTML="";
-  data.rulings.forEach(r=>{
-    const li=document.createElement("li");
-    li.textContent=`${r.scholar}: ${r.grade}`;
+  const list = document.getElementById("scholarsList");
+  list.innerHTML = "";
+  data.rulings.forEach(r => {
+    const li = document.createElement("li");
+    li.textContent = ${r.scholar}: ${r.grade};
     list.appendChild(li);
   });
 };
 
-document.getElementById("copyBtn").onclick=()=>{
-  navigator.clipboard.writeText(document.getElementById("hadithInput").value);
+/* زر النسخ */
+document.getElementById("copyBtn").onclick = () => {
+  navigator.clipboard.writeText(
+    document.getElementById("hadithInput").value
+  );
 };
 
-document.getElementById("shareBtn").onclick=async()=>{
-  const text=document.getElementById("hadithInput").value;
-  if(navigator.share){
-    await navigator.share({ title:"ميزان الحديث", text });
+/* زر المشاركة */
+document.getElementById("shareBtn").onclick = async () => {
+  const text = document.getElementById("hadithInput").value;
+  if (navigator.share) {
+    await navigator.share({ title: "ميزان الحديث", text });
   } else {
     navigator.clipboard.writeText(text);
     alert("تم النسخ للمشاركة");
